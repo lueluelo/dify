@@ -21,6 +21,9 @@ import Citation from '@/app/components/app/chat/citation'
 import { EditTitle } from '@/app/components/app/annotation/edit-annotation-modal/edit-item'
 import type { Emoji } from '@/app/components/tools/types'
 
+// 确保正确导入图片
+import CustomIcon from '@/app/components/app/create-app-modal/robot-logo.png'
+
 type AnswerProps = {
   item: ChatItem
   question: string
@@ -33,6 +36,7 @@ type AnswerProps = {
   chatAnswerContainerInner?: string
   hideProcessDetail?: boolean
 }
+
 const Answer: FC<AnswerProps> = ({
   item,
   question,
@@ -81,7 +85,22 @@ const Answer: FC<AnswerProps> = ({
 
   return (
     <div className='flex mb-2 last:mb-0'>
-
+      <div className='shrink-0 relative w-10 h-10'>
+        {
+          answerIcon || (
+            <div className='flex items-center justify-center w-full h-full rounded-full bg-[#d5f5f6] border-[0.5px] border-black/5 text-xl'>
+              <img src={CustomIcon} alt="Custom Icon" className='w-full h-full rounded-full' />
+            </div>
+          )
+        }
+        {
+          responding && (
+            <div className='absolute -top-[3px] -left-[3px] pl-[6px] flex items-center w-4 h-4 bg-white rounded-full shadow-xs border-[0.5px] border-gray-50'>
+              <LoadingAnim type='avatar' />
+            </div>
+          )
+        }
+      </div>
       <div className='chat-answer-container group grow w-0 ml-4' ref={containerRef}>
         <div className={`group relative pr-10 ${chatAnswerContainerInner}`}>
           <AnswerTriangle className='absolute -left-2 top-0 w-2 h-3 text-gray-100' />
